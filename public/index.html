@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cat Facts API</title>
+</head>
+<body style="font-family: Arial; text-align: center; padding: 40px;">
+  <h1>Cat Facts</h1>
+  <p id="fact">Click the button to get a cat fact!</p>
+  <button onclick="getFact()">Get Random Fact</button>
+
+  <script>
+    async function getFact() {
+      const res = await fetch('/facts/random');
+      const data = await res.json();
+      document.getElementById('fact').innerText = data.fact;
+    }
+  </script>
+</body>
+</html>
