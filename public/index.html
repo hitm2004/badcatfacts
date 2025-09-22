@@ -4,15 +4,66 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cat Facts API</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    #fact {
+      display: inline-block;
+      max-width: 600px;
+      padding: 20px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    button {
+      padding: 10px 20px;
+      border: 1px solid #333;
+      background: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #eee;
+    }
+    .link {
+      display: block;
+      margin-top: 25px;
+      font-size: 14px;
+    }
+    .link a {
+      color: #333;
+      text-decoration: none;
+      border-bottom: 1px dotted #333;
+    }
+    .link a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
-<body style="font-family: Arial; text-align: center; padding: 40px;">
-  <h1>Cat Facts</h1>
-  <p id="fact">Click the button to get a cat fact!</p>
+<body>
+  <h1>Cat Facts API</h1>
+
+  <div id="fact">Click the button to get a cat fact!</div><br>
   <button onclick="getFact()">Get Random Fact</button>
+
+  <div class="link">
+    Get Catfacts : 
+    <a href="/facts/random" target="_blank">/facts/random</a>
+  </div>
 
   <script>
     async function getFact() {
-      const res = await fetch('/facts/random');
+      const res = await fetch('/facts/unlimited');
       const data = await res.json();
       document.getElementById('fact').innerText = data.fact;
     }
