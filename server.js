@@ -1,26 +1,25 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const axios = require('axios');   // ✅ ADD THIS
+const axios = require('axios');   
 const facts = require('./catfacts.json');
 
 const app = express();
 const PORT = process.env.PORT || 4444;
 
-// ✅ ADD THESE
-const RLaaS_URL = 'https://<your-rlaas-backend>.onrender.com/check'; // replace with your RLaaS backend URL
-const API_KEY = '<your-api-key>'; // replace with the API key you created in RLaaS dashboard
+const RLaaS_URL = 'https://<your-rlaas-backend>.onrender.com/check'; // rlaas backend URL
+const API_KEY = '3f3c61e5-443c-414f-81b8-7eb954cd20da'; // API key RLaaS dashboard
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ✅ ADD THIS MIDDLEWARE
+// middleware from rlaas to ensure rate limiting
 async function rateLimitCheck(req, res, next) {
   try {
     await axios.post(RLaaS_URL, null, {
       headers: { Authorization: API_KEY }
     });
-    next(); // allowed → continue
+    next(); // if allowed → continue
   } catch (err) {
     if (err.response && err.response.status === 429) {
       return res.status(429).json({ error: 'Too Many Requests (Rate limited by RLaaS)' });
@@ -30,12 +29,12 @@ async function rateLimitCheck(req, res, next) {
   }
 }
 
-// all facts endpoint (✅ PROTECT WITH RLaaS)
+// all facts endpoint 
 app.get('/facts', rateLimitCheck, (req, res) => {
   res.json({ facts });
 });
 
-// random fact endpoint (✅ PROTECT WITH RLaaS)
+// random fact endpoint
 app.get('/facts/random', rateLimitCheck, (req, res) => {
   const randomFact = facts[Math.floor(Math.random() * facts.length)];
   res.json({ fact: randomFact });
