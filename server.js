@@ -7,7 +7,7 @@ const facts = require('./catfacts.json');
 const app = express();
 const PORT = process.env.PORT || 4444;
 
-const RLaaS_URL = 'https://<your-rlaas-backend>.onrender.com/check'; // rlaas backend URL
+const RLaaS_URL = 'https://rlaas-backend.onrender.com/check'; // rlaas backend URL
 const API_KEY = '3f3c61e5-443c-414f-81b8-7eb954cd20da'; // API key RLaaS dashboard
 
 app.use(cors());
