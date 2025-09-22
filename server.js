@@ -29,6 +29,12 @@ async function rateLimitCheck(req, res, next) {
   }
 }
 
+// unlimited for main site
+app.get('/facts/unlimited', (req, res) => {
+  const randomFact = facts[Math.floor(Math.random() * facts.length)];
+  res.json({ fact: randomFact });
+});
+
 // all facts endpoint 
 app.get('/facts', rateLimitCheck, (req, res) => {
   res.json({ facts });
